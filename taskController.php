@@ -7,7 +7,7 @@ switch($_POST["type"]) {
         store($_POST["fid"]);
         break;
     case "delete":
-        delete($_POST["id"]);
+        delete($_POST["task_id"]);
         break;
     case "update": 
         update($_POST["id"]);
@@ -33,9 +33,45 @@ function store($fid) {
 }
 
 function delete($id) {
+    try
+    {
+        $database = new Connection();
+        $db = $database->openConnection();
+        $sql = "DELETE FROM task WHERE `task_id` = $id" ;
+        $affectedrows = $db->exec($sql);
+        if(isset($affectedrows))
+        {
+            header("Location: http://localhost/todo");
+        }          
+    }
 
+    catch (PDOException $e)
+    {
+        $_SESSION['error'] = "All tasks need to be done to check the list";
+        header("Location: http://localhost/todo");
+        exit();
+        
+    }
 }
 
 function update($id) {
+    try
+    {
+        $database = new Connection();
+        $check = new InputValidation();
+        $title = $check->validate($_POST['title']);
+        $db = $database->openConnection();
+        $sql = "UPDATE `task` SET `title`='$title' WHERE `task_id` = $id";
+        $db->exec($sql);  
+        header("Location: http://localhost/todo");   
+    }
 
+    catch (PDOException $e)
+    {
+        $_SESSION['error'] = "SQL Error: $e";
+        header("Location: http://localhost/todo");
+        // echo $e;
+        exit();
+        
+    }
 }

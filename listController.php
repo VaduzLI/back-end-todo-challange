@@ -11,7 +11,7 @@ switch($_POST["type"]) {
         delete($_POST["task_list_id"]);
         break;
     case "update": 
-        update(1);
+        update($_POST["id"]);
         break;
 }
 
@@ -43,7 +43,7 @@ function delete($id) {
         $database = new Connection();
         $db = $database->openConnection();
         $sql = "DELETE FROM task_lists WHERE `task_list_id` = $id" ;
-        $affectedrows  = $db->exec($sql);
+        $affectedrows = $db->exec($sql);
         if(isset($affectedrows))
         {
             header("Location: http://localhost/todo");
@@ -61,5 +61,23 @@ function delete($id) {
 }
 
 function update($id) {
-    echo 'update function called';
+    try
+    {
+        $database = new Connection();
+        $check = new InputValidation();
+        $title = $check->validate($_POST['title']);
+        $db = $database->openConnection();
+        $sql = "UPDATE `task_lists` SET `title`='$title' WHERE `task_list_id` = $id";
+        $db->exec($sql);  
+        header("Location: http://localhost/todo");   
+    }
+
+    catch (PDOException $e)
+    {
+        $_SESSION['error'] = "SQL Error: $e";
+        header("Location: http://localhost/todo");
+        // echo $e;
+        exit();
+        
+    }
 }

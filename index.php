@@ -38,9 +38,17 @@ catch (PDOException $e)
         <div class="tasksContainer">
         <?php if(isset($_SESSION['error']))
         {
-            
-            echo $_SESSION['error'];
-            unset($_SESSION['error']);
+            ?>
+                <div class="errorContainer">
+
+                    <?php 
+                        echo $_SESSION['error'];
+                        unset($_SESSION['error']);
+                    ?>
+
+                </div>
+            <?php
+
         } ?>
             <?php foreach ($db->query($sql) as $row) { ?>
             <div class="taskList">
@@ -49,7 +57,7 @@ catch (PDOException $e)
                     <input type="hidden" name="task_list_id" value="<?php echo $row['task_list_id'] ?>">
                     <input type="submit" class="deleteTaskListButton" value="&#10004;"></input>
                 </form>
-                <form action="settings.php">
+                <form action="listSettings.php">
                     <input type="hidden" name="id" value="<?php echo $row['task_list_id'] ?>">
                     <input type="submit" class="settingsTaskListButton" value="&#9881;">    
                 </form>
@@ -63,12 +71,23 @@ catch (PDOException $e)
                         <form method="post" action="taskController.php">
                             <input name="type" type="hidden" value="store">
                             <input name="fid" type="hidden" value=<?php echo $row['task_list_id'] ?>>
-                            <input name="title" type="text">
+                            <input required name="title" type="text">
                             <input type="submit" value="+ New Task">
                         </form>
                         <?php foreach($db->query("SELECT * FROM task WHERE task_list_id = " . $row["task_list_id"]) as $task) { ?>
                         <div class="task">
                             <?php echo $task['title'] ?>
+                            <div style="margin-left: auto">
+                            <form method="post" style="float: left;" class="taskForm" action="taskSettings.php">
+                                <input type="hidden" name="task_id" value=<?php echo $task['task_id'] ?>>
+                                <input type="submit" value="&#9881;">
+                            </form>
+                            <form method="post" style="float: right" class="taskForm" action="taskController.php">
+                                <input type="hidden" name="type" value="delete">
+                                <input type="hidden" name="task_id" value=<?php echo $task['task_id'] ?>>
+                                <input type="submit" value="&#10004;">
+                            </form>
+                            </div>
                         </div>
                         <?php } ?>
                     </div>

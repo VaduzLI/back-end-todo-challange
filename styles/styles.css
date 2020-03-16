@@ -206,6 +206,8 @@ html, body {
 .task {
     width: 70%;
     height: 50px;
+    display: flex;
+    align-items: center;
 }
 
 .settingsTaskListButton {
@@ -219,4 +221,14 @@ html, body {
     background-color: rgb(252, 172, 1);
     color: white;
     border: none;
+}
+
+.taskFrom {
+    margin: 0;
+}
+
+.errorContainer {
+    margin: auto;
+    width: 700px;
+    background-color: rgba(253, 7, 7, 0.322);
 }
