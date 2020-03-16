@@ -1,0 +1,222 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.taskbar{
+    width: 100%;
+    height: 400px;
+    background-color: rgb(255, 255, 255);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../img/best.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    margin-bottom: 75px;
+}
+
+.addTaskButton {
+    position: absolute;
+    width: 185px;
+    height: 50px;
+    border-radius: 50px;
+    border: none;
+    color: white;
+    /* background-color: rgb(216, 152, 216); */
+    top: 425px;
+    transform: translateY(-100%);
+    outline: 0;
+    background: linear-gradient(45deg, rgba(120,204,220,1) 0%, rgba(9,139,201,1) 100%);
+    font-size: 17px;
+}
+
+.time {
+    position: relative;
+    
+    /* height: 200px;
+    width: 400px; */
+}
+
+.time div {
+    text-align: center;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.hourTime {
+    font-size: 56px;
+    color: white;
+}
+
+.dayTime {
+    font-size: 24px;
+    color: white;
+}
+
+.welcomeText {
+    width: 600px;
+    height: 75px;
+    margin-bottom: 20px;
+    font-weight: lighter;
+    color: white
+}
+
+.welcomeText span {
+    font-size: 70px;
+}
+
+.tasksContainer {
+    /* height: 100%; */
+    /* max-width: 1500px; */
+    margin: auto;
+    /* display: inline-block; */
+    justify-content: center;
+}
+
+.taskList {
+    width: 700px;
+    /* height: 80px; */
+    border-left: 5px rgb(76, 219, 76) solid;
+    box-shadow: 10px 10px 20px -8px rgba(0,0,0,0.69);
+    margin: auto;
+    margin-bottom: 20px;
+}
+
+.taskListTextContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+}
+
+.taskListName {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 20px;
+    text-align: center;
+}
+
+.deleteTaskListButton {
+    float: right;
+    border-bottom-left-radius: 50px;
+    padding-left: 15px;
+    padding-bottom: 15px;
+    padding-top: 10px;
+    padding-right: 10px;
+    outline: 0;
+    background-color: rgb(30, 129, 221);
+    color: white;
+    border: none;
+}
+
+.taskItem {
+    width: 100%;
+    /* height: 600px; */
+    
+    /* box-shadow: 10px 10px 20px -8px rgba(0,0,0,0.69); */
+}
+
+.taskListDropDownButton {
+    background: 0;
+    border: none;
+    outline: 0;
+    font-size: 24px;
+}
+
+.addTaskBackground {
+    height: 100%;
+    width: 100%;
+    background-image: url("../img/best.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blur {
+    background: inherit;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(20px);
+    background-color: rgba(29, 29, 29, 0.281);
+    transition: 1s;
+}
+
+
+.createListForm {
+    height: 400px;
+    width: 600px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(221, 189, 189, 0.363);
+    -webkit-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+    padding: 50px;
+}
+
+
+
+.listFormInput {
+    width: 400px;
+    padding: 5px;
+    margin-bottom: 15px;
+    border-radius: 10px;
+    border: 1px solid gray;
+    outline: 0;
+}
+
+.listFormSubmit {
+    width: 125px;
+    height: 35px;
+    border-radius: 50px;
+    border: none;
+    color: white;
+    outline: 0;
+    background: linear-gradient(45deg, rgba(120,204,220,1) 0%, rgba(9,139,201,1) 100%);
+    font-size: 17px;
+}
+
+.addTaskHeader {
+    position: relative;
+    bottom: 50px;
+    font-size: 25px;
+    color: white;
+}
+
+.taskItemContent {
+    /* height: 100%; */
+    /* width: 100%; */
+    display: flex;
+    /* justify-content: center; */
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border-top: 1px solid rgb(172, 171, 171);
+}
+
+.task {
+    width: 70%;
+    height: 50px;
+}
+
+.settingsTaskListButton {
+    float: left;
+    border-bottom-right-radius: 50px;
+    padding-left: 10px;
+    padding-bottom: 15px;
+    padding-top: 10px;
+    padding-right: 15px;
+    outline: 0;
+    background-color: rgb(252, 172, 1);
+    color: white;
+    border: none;
+}

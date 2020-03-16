@@ -1,3 +1,21 @@
+<?php
+
+include 'connection.php';
+session_start();
+
+try
+{
+    $database = new Connection();
+    $db = $database->openConnection();
+    $sql = "SELECT * FROM task_lists " ;
+}
+catch (PDOException $e)
+{
+    echo "There is some problem in connection: " . $e->getMessage();
+}  
+
+?>
+
 <html>
 <head>
     <link rel="stylesheet" href="styles/styles.css" type="text/css">
@@ -15,20 +33,50 @@
                     <span><?php echo date('l jS \of F Y'); ?></span>
                 </div>
             </div>
-            <button class="addTaskButton">+ New task list</button>
+            <button onclick="window.location.href='addTask.php'" class="addTaskButton">+ New task list</button>
         </div>
         <div class="tasksContainer">
+        <?php if(isset($_SESSION['error']))
+        {
+            
+            echo $_SESSION['error'];
+            unset($_SESSION['error']);
+        } ?>
+            <?php foreach ($db->query($sql) as $row) { ?>
             <div class="taskList">
-                <button class="deleteTaskListButton">&#10004;</button>
+                <form method="post" action="listController.php">
+                    <input type="hidden" name="type" value="delete">
+                    <input type="hidden" name="task_list_id" value="<?php echo $row['task_list_id'] ?>">
+                    <input type="submit" class="deleteTaskListButton" value="&#10004;"></input>
+                </form>
+                <form action="settings.php">
+                    <input type="hidden" name="id" value="<?php echo $row['task_list_id'] ?>">
+                    <input type="submit" class="settingsTaskListButton" value="&#9881;">    
+                </form>
+                
+                
                 <div class="taskListTextContainer">
-                    <span>C</span>
-                    <span class="taskListName">Some Task</span>
-                    <button>^</button>
+                    <button onclick="openTaskList(<?php echo $row['task_list_id'] ?>)" class="taskListDropDownButton"><?php echo $row['title'] ?></button>
                 </div>
-                <div class="taskItem">
-                    <span>een taak</span>
+                <div style="display: none;" id="<?php echo 'taskItem'.$row['task_list_id'] ?>" class="taskItem">
+                    <div class="taskItemContent">
+                        <form method="post" action="taskController.php">
+                            <input name="type" type="hidden" value="store">
+                            <input name="fid" type="hidden" value=<?php echo $row['task_list_id'] ?>>
+                            <input name="title" type="text">
+                            <input type="submit" value="+ New Task">
+                        </form>
+                        <?php foreach($db->query("SELECT * FROM task WHERE task_list_id = " . $row["task_list_id"]) as $task) { ?>
+                        <div class="task">
+                            <?php echo $task['title'] ?>
+                        </div>
+                        <?php } ?>
+                    </div>
                 </div>
             </div>
+            <?php } ?>
         </div>
     </body>
 </html>
+
+<script src="scripts/script.js"></script>
