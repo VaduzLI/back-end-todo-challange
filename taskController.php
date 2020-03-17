@@ -21,8 +21,10 @@ function store($fid) {
         $check = new InputValidation();
         $db = $database->openConnection();
         $title = $check->validate($_POST['title']);
-        $stm = $db->prepare("INSERT INTO `task`(`title`, `task_list_id`) VALUES (:title, :fid)");
-        $stm->execute(array(':title' => $title, ':fid' => $fid));
+        $status = $check->validate($_POST['status']);
+        $time = $check->validate($_POST['time']);
+        $stm = $db->prepare("INSERT INTO `task`(`title`, `task_list_id`, `status`, `time`) VALUES (:title, :fid, :status, :time)");
+        $stm->execute(array(':title' => $title, ':fid' => $fid, ':status' => $status, ':time' => $time));
 
         header("Location: http://localhost/todo");
     }
@@ -60,8 +62,10 @@ function update($id) {
         $database = new Connection();
         $check = new InputValidation();
         $title = $check->validate($_POST['title']);
+        $status = $check->validate($_POST['status']);
+        $time = $check->validate($_POST['time']);
         $db = $database->openConnection();
-        $sql = "UPDATE `task` SET `title`='$title' WHERE `task_id` = $id";
+        $sql = "UPDATE `task` SET `title`='$title', `status`='$status', `time`='$time' WHERE `task_id` = $id";
         $db->exec($sql);  
         header("Location: http://localhost/todo");   
     }

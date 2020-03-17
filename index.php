@@ -72,13 +72,27 @@ catch (PDOException $e)
                             <input name="type" type="hidden" value="store">
                             <input name="fid" type="hidden" value=<?php echo $row['task_list_id'] ?>>
                             <input required name="title" type="text">
+                            <select name="status" id="status">
+                                <option value="Todo">Todo</option>
+                                <option value="Stuck">Stuck</option>
+                                <option value="Doing">Doing</option>
+                            </select>
+                            <input name="time" type="time">
                             <input type="submit" value="+ New Task">
                         </form>
                         <?php foreach($db->query("SELECT * FROM task WHERE task_list_id = " . $row["task_list_id"]) as $task) { ?>
                         <div class="task">
-                            <?php echo $task['title'] ?>
+                        <div style="float: left">
+                            <div>Name: <?php echo $task['title'] ?></div>
+                            <div>Status: <?php echo $task['status'] ?></div>
+                            <div>Finish:<?php echo $task['time'] ?></div>
+                        </div>
+
+                            
+                            
+                            
                             <div style="margin-left: auto">
-                            <form method="post" style="float: left;" class="taskForm" action="taskSettings.php">
+                            <form method="post" style="float: right;" class="taskForm" action="taskSettings.php">
                                 <input type="hidden" name="task_id" value=<?php echo $task['task_id'] ?>>
                                 <input type="submit" value="&#9881;">
                             </form>
