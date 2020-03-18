@@ -1,6 +1,7 @@
 <?php
 include 'connection.php';
 include 'inputValidation.php';
+session_start();
 
 switch($_POST["type"]) {
     case "store": 
@@ -11,6 +12,12 @@ switch($_POST["type"]) {
         break;
     case "update": 
         update($_POST["id"]);
+        break;
+    case "sort":
+        sorting($_POST["id"]);
+        break;
+    case "filter":
+        filter($_POST["id"]);
         break;
 }
 
@@ -78,4 +85,14 @@ function update($id) {
         exit();
         
     }
+}
+
+function sorting($id) {
+    $_SESSION['sort'] = $_POST['dir'];
+    header("Location: http://localhost/todo");   
+    
+}
+
+function filter($id) {
+
 }

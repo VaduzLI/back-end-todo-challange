@@ -7,7 +7,7 @@ try
 {
     $database = new Connection();
     $db = $database->openConnection();
-    $sql = "SELECT * FROM task_lists " ;
+    $sql = "SELECT * FROM task_lists";
 }
 catch (PDOException $e)
 {
@@ -77,20 +77,44 @@ catch (PDOException $e)
                                 <option value="Stuck">Stuck</option>
                                 <option value="Doing">Doing</option>
                             </select>
-                            <input name="time" type="time">
+                            <input required name="time" type="time">
                             <input type="submit" value="+ New Task">
                         </form>
-                        <?php foreach($db->query("SELECT * FROM task WHERE task_list_id = " . $row["task_list_id"]) as $task) { ?>
+                        <div class="sortContainer">
+                            <form>
+                                <select name="dir" id="">
+                                    <option value="ASC">ASC</option>
+                                    <option value="DESC">DESC</option>
+                                </select>
+
+                                <select name="search" id="">
+                                    <!-- <option value="Nosort"></option> -->
+                                    <option value="Todo">Todo</option>
+                                    <option value="Stuck">Stuck</option>
+                                    <option value="Doing">Doing</option>
+                                </select>
+                                <input type="submit" value="Search">
+                            </form>
+                        </div>
+                        <?php 
+                            $taskid = $row["task_list_id"];
+                            $dir = '';
+                            if(isset($_GET['dir'])) {
+                                $dir = $_GET['dir'];
+                            }
+                            $search = 'Todo';
+                            if(isset($_GET['search'])) {
+                                $search = $_GET['search'];
+                            }
+                            
+                        ?>
+                        <?php foreach($db->query("SELECT * FROM task WHERE task_list_id = '$taskid' AND status = '$search' ORDER BY status $dir" ) as $task) { ?>
                         <div class="task">
                         <div style="float: left">
                             <div>Name: <?php echo $task['title'] ?></div>
                             <div>Status: <?php echo $task['status'] ?></div>
-                            <div>Finish:<?php echo $task['time'] ?></div>
+                            <div>Finish: <?php echo $task['time'] ?></div>
                         </div>
-
-                            
-                            
-                            
                             <div style="margin-left: auto">
                             <form method="post" style="float: right;" class="taskForm" action="taskSettings.php">
                                 <input type="hidden" name="task_id" value=<?php echo $task['task_id'] ?>>

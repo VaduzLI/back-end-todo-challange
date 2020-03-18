@@ -235,3 +235,9 @@ html, body {
     width: 700px;
     background-color: rgba(253, 7, 7, 0.322);
 }
+
+.sortContainer {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
