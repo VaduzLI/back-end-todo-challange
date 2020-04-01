@@ -16,16 +16,25 @@
     }  
 ?>
 
-<form method="POST" action="taskController.php">
-    <input type="hidden" name="id" value="<?php echo $_POST["task_id"] ?>">
-    <input type="hidden" name="type" value="update">
+<html>
+    <head>
+        <link rel="stylesheet" href="styles/styles.css" type="text/css">
+    </head>
+    <body>
+        <div class="addTaskBackground">
+            <form method="POST" class="createListForm" action="taskController.php">
+                <input type="hidden" name="id" value="<?php echo $_POST["task_id"] ?>">
+                <input type="hidden" name="type" value="update">
+                <input required class="listFormInput" type="text" name="title" id="title" value="<?php echo $task["title"] ?>">
+                <select class="listFormInput" required name="status" id="status">
+                    <option value="Todo">Todo</option>
+                    <option value="Stuck">Stuck</option>
+                    <option value="Doing">Doing</option>
+                </select>
+                <input class="listFormInput" required name="time" type="time">
+                <input class="listFormSubmit" required type="submit" value="Update">
+            </form>
+        </div>
+    </body>
+</html>
 
-    <input type="text" name="title" id="title" value="<?php echo $task["title"] ?>">
-    <select name="status" id="status">
-        <option value="Todo">Todo</option>
-        <option value="Stuck">Stuck</option>
-        <option value="Doing">Doing</option>
-    </select>
-    <input name="time" type="time">
-    <input type="submit" value="Update">
-</form>
