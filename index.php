@@ -88,7 +88,7 @@ catch (PDOException $e)
                                 </select>
 
                                 <select name="search" id="">
-                                    <!-- <option value="Nosort"></option> -->
+                                    <option value="All">All</option>
                                     <option value="Todo">Todo</option>
                                     <option value="Stuck">Stuck</option>
                                     <option value="Doing">Doing</option>
@@ -98,17 +98,20 @@ catch (PDOException $e)
                         </div>
                         <?php 
                             $taskid = $row["task_list_id"];
-                            $dir = '';
-                            if(isset($_GET['dir'])) {
-                                $dir = $_GET['dir'];
+                            $dir = $_GET['dir'];
+                            $search = $_GET['search'];
+                            unset($sql);
+                            if (!is_null($_GET['search']) && $_GET['search'] !== "All") {
+                                $sql[] = "AND status = '$search'";
                             }
-                            $search = 'Todo';
-                            if(isset($_GET['search'])) {
-                                $search = $_GET['search'];
+                            if (!is_null($_GET['dir'])) {
+                                $sql[] = "ORDER BY status $dir";
                             }
-                            
+                            $query = "SELECT * FROM task";
+
+                            $query .= " WHERE task_list_id = '$taskid' " . implode(' ', $sql);
                         ?>
-                        <?php foreach($db->query("SELECT * FROM task WHERE task_list_id = '$taskid' AND status = '$search' ORDER BY status $dir" ) as $task) { ?>
+                        <?php foreach($db->query($query) as $task) { ?>
                         <div class="task">
                         <div style="float: left">
                             <div>Name: <?php echo $task['title'] ?></div>

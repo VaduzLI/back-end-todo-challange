@@ -2,7 +2,7 @@
 Class Connection {
 private  $server = "mysql:host=localhost;dbname=todo";
 private  $user = "root";
-private  $pass = "";
+private  $pass = "admin";
 private $options  = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,);
 protected $con;
  
